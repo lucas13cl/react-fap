@@ -12,3 +12,10 @@ Quarta 25/06
 -Concluir a primeira etapa
 -fiz a instalação do axios e criei uma chamada para extrair os dados da api
 -configurei e subi o código para o git
+
+
+Quinta 26/06
+
+- Criei o formulario com nome e e-mail
+- tive problemas com o retorno da rota
+- 
