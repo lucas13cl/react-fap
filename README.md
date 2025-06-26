@@ -7,7 +7,7 @@ Sexta 20/06
 -Criei o componente Saudação
 
 
-Quarta
+Quarta 25/06
 
 -Concluir a primeira etapa
 -fiz a instalação do axios e criei uma chamada para extrair os dados da api
