@@ -1,31 +1,54 @@
-import Saudacao from "./components/Saudacao";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Saudacao from "./components/Saudacao";
 
 function App() {
   const [usuarios, setUsuarios] = useState([]);
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
+  const [editandoId, setEditandoId] = useState(null);
 
-  // Busca os Dados
   const carregarUsuarios = async () => {
     try {
-      const resposta = await axios.get("http://localhost:3000/usuarios");
+      const resposta = await axios.get("http://localhost:5000/usuarios");
       setUsuarios(resposta.data);
     } catch (erro) {
-      console.error("Erro ao fazer a busca:", erro);
+      console.error("ERRO NA BUSCA:", erro);
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:3000/usuarios", { nome, email });
+      if (editandoId) {
+        await axios.put(`http://localhost:5000/usuarios/${editandoId}`, {
+          nome,
+          email,
+        });
+        setEditandoId(null);
+      } else {
+        await axios.post("http://localhost:5000/usuarios", { nome, email });
+      }
       setNome("");
       setEmail("");
       carregarUsuarios();
     } catch (erro) {
-      console.error("ERRO NO CADASTRO", erro);
+      console.error("ERRO AO SALVAR:", erro);
+    }
+  };
+
+  const editarUsuario = (usuario) => {
+    setNome(usuario.nome);
+    setEmail(usuario.email);
+    setEditandoId(usuario.id);
+  };
+
+  const excluirUsuario = async (id) => {
+    try {
+      await axios.delete(`http://localhost:5000/usuarios/${id}`);
+      carregarUsuarios();
+    } catch (erro) {
+      console.error("ERRO AO EXCLUIR:", erro);
     }
   };
 
@@ -52,7 +75,7 @@ function App() {
           onChange={(e) => setEmail(e.target.value)}
           required
         />
-        <button type="submit">Cadastrar</button>
+        <button type="submit">{editandoId ? "Atualizar" : "Cadastrar"}</button>
       </form>
 
       <h2>Lista de Usuários</h2>
@@ -60,6 +83,8 @@ function App() {
         {usuarios.map((usuario) => (
           <li key={usuario.id}>
             {usuario.nome} - {usuario.email}
+            <button onClick={() => editarUsuario(usuario)}>Editar</button>
+            <button onClick={() => excluirUsuario(usuario.id)}>Excluir</button>
           </li>
         ))}
       </ul>
