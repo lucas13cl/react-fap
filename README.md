@@ -18,10 +18,15 @@ Quinta 26/06
 
 - Criei o formulario com nome e e-mail
 - tive problemas com o retorno da rota
-- 
+
 
 
 Sexta 27/06
 
 - Implementação do botao editar
 - tive dificuldades para ajustar o botão
+
+
+
+Segunda 30/06 
+- Conclusão do projeto e apresentação
